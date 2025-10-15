@@ -1,81 +1,85 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const port = 3000;
 
+const supabaseUrl = 'https://ezapuhzcecxfrulusemb.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6YXB1aHpjZWN4ZnJ1bHVzZW1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA0Njc1MDUsImV4cCI6MjA3NjA0MzUwNX0.AxhTRCLsrwNmyyv5_R6BXVaOUR4YNgRCCtvKEhs3PC0';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
 app.use(bodyParser.json());
+const cors = require('cors');
+app.use(cors());
 
-const cardsFilePath = './cards.json';
-
-// Function to read cards from the JSON file
-const readCardsFromFile = () => {
-  try {
-    const data = fs.readFileSync(cardsFilePath, 'utf8');
-    return JSON.parse(data);
-  } catch (err) {
-    return [];
+app.get('/cards', async (req, res) => {
+  const { data, error } = await supabase
+    .from('cards')
+    .select('*');
+  if (error) {
+    return res.status(500).json({ error: error.message });
   }
-};
-
-// Function to write cards to the JSON file
-const writeCardsToFile = (cards) => {
-  fs.writeFileSync(cardsFilePath, JSON.stringify(cards, null, 2), 'utf8');
-};
-
-let cards = readCardsFromFile();
-let idCounter = cards.length > 0 ? Math.max(...cards.map(c => c.id)) + 1 : 1;
-
-app.get('/cards', (req, res) => {
-  res.status(200).json(cards);
+  res.status(200).json(data);
 });
 
-app.get('/cards/:id', (req, res) => {
-  const card = cards.find(c => c.id === parseInt(req.params.id));
-  if (card) {
-    res.status(200).json(card);
+app.get('/cards/:id', async (req, res) => {
+  const { data, error } = await supabase
+    .from('cards')
+    .select('*')
+    .eq('id', req.params.id)
+    .single();
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+  if (data) {
+    res.status(200).json(data);
   } else {
     res.status(404).json({ message: 'Card not found' });
   }
 });
 
-const cors = require('cors');
-app.use(cors()); 
-
-app.post('/cards', (req, res) => {
+app.post('/cards', async (req, res) => {
   const { number, exp, name } = req.body;
   if (!number || !exp || !name) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
-  const newCard = {
-    id: idCounter++,
-    number,
-    exp,
-    name
-  };
-  cards.push(newCard);
-  writeCardsToFile(cards);
-  res.status(201).json(newCard);
-});
-
-app.put('/cards/:id', (req, res) => {
-  const card = cards.find(c => c.id === parseInt(req.params.id));
-  if (!card) {
-    return res.status(404).json({ message: 'Card not found' });
+  const { data, error } = await supabase
+    .from('cards')
+    .insert([{ number, exp, name }])
+    .single();
+  if (error) {
+    return res.status(500).json({ error: error.message });
   }
-  const { number, exp, name } = req.body;
-  if (number) card.number = number;
-  if (exp) card.exp = exp;
-  if (name) card.name = name;
-  writeCardsToFile(cards);
-  res.status(200).json(card);
+  res.status(201).json(data);
 });
 
-app.delete('/cards/:id', (req, res) => {
-  const index = cards.findIndex(c => c.id === parseInt(req.params.id));
-  if (index !== -1) {
-    cards.splice(index, 1);
-    writeCardsToFile(cards);
+app.put('/cards/:id', async (req, res) => {
+  const { number, exp, name } = req.body;
+  const { data, error } = await supabase
+    .from('cards')
+    .update({ number, exp, name })
+    .eq('id', req.params.id)
+    .single();
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+  if (data) {
+    res.status(200).json(data);
+  } else {
+    res.status(404).json({ message: 'Card not found' });
+  }
+});
+
+app.delete('/cards/:id', async (req, res) => {
+  const { data, error } = await supabase
+    .from('cards')
+    .delete()
+    .eq('id', req.params.id)
+    .single();
+  if (error) {
+    return res.status(500).json({ error: error.message });
+  }
+  if (data) {
     res.status(204).send();
   } else {
     res.status(404).json({ message: 'Card not found' });

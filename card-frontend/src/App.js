@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
+const API_URL = 'https://localhost:3000';
+
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -64,7 +66,7 @@ const CardForm = ({ onLogout }) => {
 
   const fetchCards = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/cards');
+      const response = await axios.get(`${API_URL}/cards`);
       setCards(response.data);
     } catch (error) {
       console.error('Error fetching cards:', error);
@@ -107,7 +109,7 @@ const CardForm = ({ onLogout }) => {
         name: cardName,
       };
       try {
-        const response = await axios.post('http://localhost:3000/cards', newCard);
+        const response = await axios.post(`${API_URL}/cards`, newCard);
         setCards([...cards, response.data]);
         clearForm();
       } catch (error) {
