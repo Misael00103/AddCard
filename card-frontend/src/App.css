@@ -1,10 +1,11 @@
 .container {
   background: linear-gradient(135deg, #f6f8fc, #ffffff);
-  padding: 30px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 450px;
-  margin: 60px auto;
+  width: 100%;
+  max-width: 450px;
+  margin: 20px auto;
   transition: all 0.3s ease;
 }
 
@@ -15,11 +16,11 @@
 .card-preview {
   background: linear-gradient(135deg, #1a1f36, #2c365d);
   color: white;
-  padding: 25px;
+  padding: 20px;
   border-radius: 16px;
   margin-bottom: 25px;
   position: relative;
-  height: 220px;
+  height: 200px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -33,7 +34,7 @@
 .card-header {
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
+  font-size: 14px;
   opacity: 0.9;
 }
 
@@ -43,7 +44,7 @@
 }
 
 .wifi-icon {
-  font-size: 20px;
+  font-size: 18px;
   animation: pulse 2s infinite;
 }
 
@@ -55,20 +56,20 @@
 
 .card-chip {
   background: linear-gradient(135deg, #d4af37, #f9d423);
-  width: 60px;
-  height: 40px;
+  width: 50px;
+  height: 35px;
   border-radius: 6px;
   position: absolute;
-  top: 60px;
-  left: 25px;
+  top: 50px;
+  left: 20px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .card-type {
   position: absolute;
-  top: 90px;
-  right: 25px;
-  font-size: 14px;
+  top: 80px;
+  right: 20px;
+  font-size: 12px;
   color: #ddd;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -76,36 +77,36 @@
 
 .card-number {
   position: absolute;
-  top: 120px;
-  left: 25px;
-  font-size: 22px;
-  letter-spacing: 3px;
+  top: 105px;
+  left: 20px;
+  font-size: 18px;
+  letter-spacing: 2px;
   font-family: 'Courier New', monospace;
   transition: all 0.2s ease;
 }
 
 .card-valid {
   position: absolute;
-  bottom: 70px;
-  left: 245px;
-  font-size: 11px;
+  bottom: 60px;
+  left: 200px;
+  font-size: 10px;
   color: #bbb;
   text-transform: uppercase;
 }
 
 .card-exp {
   position: absolute;
-  bottom: 50px;
-  left: 245px;
-  font-size: 16px;
+  bottom: 40px;
+  left: 200px;
+  font-size: 14px;
   transition: all 0.2s ease;
 }
 
 .card-name {
   position: absolute;
-  bottom: 50px;
-  left: 25px;
-  font-size: 18px;
+  bottom: 40px;
+  left: 20px;
+  font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: all 0.2s ease;
@@ -113,9 +114,9 @@
 
 .card-logo {
   position: absolute;
-  bottom: 40px;
-  right: 25px;
-  font-size: 35px;
+  bottom: 30px;
+  right: 20px;
+  font-size: 28px;
   opacity: 0.8;
   animation: rotate-logo 10s infinite linear;
 }
@@ -127,7 +128,7 @@
 
 .card-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 15px;
 }
 
@@ -138,7 +139,7 @@
 }
 
 .full-width {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 label {
@@ -177,22 +178,26 @@ input:focus {
 }
 
 .buttons {
-  grid-column: span 2;
+  grid-column: span 1;
   display: flex;
-  justify-content: flex-start;
-  gap: 15px;
+  flex-direction: column;
+  gap: 10px;
   margin-top: 10px;
 }
 
-.add-btn {
-  background: linear-gradient(135deg, #6a5acd, #483d8b);
-  color: white;
-  padding: 12px 25px;
+.add-btn, .cancel-btn {
+  padding: 12px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
+  width: 100%;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #6a5acd, #483d8b);
+  color: white;
 }
 
 .add-btn:hover {
@@ -203,17 +208,15 @@ input:focus {
 .cancel-btn {
   background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
   color: #333;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
 }
 
 .cancel-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-form {
+  margin: 20px 0;
 }
 
 .logout-section {
@@ -256,6 +259,9 @@ input:focus {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s forwards;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .card-item:hover {
@@ -263,17 +269,66 @@ input:focus {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.card-info {
+  flex: 1;
+}
+
+.card-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+}
+
+.edit-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(243, 156, 18, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+}
+
+.no-cards {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 40px 20px;
+}
+
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.card-item p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #555;
 }
 
 .login-form {
@@ -317,7 +372,7 @@ h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   background: linear-gradient(135deg, #6a5acd, #483d8b);
   -webkit-background-clip: text;
@@ -349,5 +404,55 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 30px;
+    margin: 60px auto;
+  }
+  
+  .card-preview {
+    height: 220px;
+    padding: 25px;
+  }
+  
+  .card-number {
+    font-size: 22px;
+    letter-spacing: 3px;
+  }
+  
+  .card-name {
+    font-size: 18px;
+  }
+  
+  .card-exp {
+    font-size: 16px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  .card-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .full-width {
+    grid-column: span 2;
+  }
+  
+  .buttons {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  .add-btn, .cancel-btn {
+    width: auto;
+  }
+  
+  .card-item {
+    padding: 20px;
+  }
 }
