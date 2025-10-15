@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import ErrorBoundary from './ErrorBoundary';
 
-const API_URL = 'https://localhost:3000';
-
+const API_URL = 'http://localhost:3000';
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -225,7 +225,13 @@ const App = () => {
 
   return (
     <div className="app">
-      {!isLoggedIn ? <Login onLogin={setIsLoggedIn} /> : <CardForm onLogout={() => setIsLoggedIn(false)} />}
+      {!isLoggedIn ? (
+        <Login onLogin={setIsLoggedIn} />
+      ) : (
+        <ErrorBoundary>
+          <CardForm onLogout={() => setIsLoggedIn(false)} />
+        </ErrorBoundary>
+      )}
     </div>
   );
 };
